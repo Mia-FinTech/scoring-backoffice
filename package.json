@@ -1,0 +1,25 @@
+{
+    "name": "Scoring Manager",
+    "version": "0.0.1",
+    "files": [
+      "*.json",
+      "package.json"
+    ],
+    "exports": {
+      "./scoring-overview.json": {
+        "default": "./scoring-overview.json"
+      },
+      "./scoring-detail.json": {
+        "default": "./scoring-detail.json"
+      },
+      "./adaptive-approval-overview.json": {
+        "default": "./adaptive-approval-overview.json"
+      },
+      "./adaptive-approval-detail.json": {
+        "default": "./adaptive-approval-detail.json"
+      }
+    },
+    "engines": {
+      "node": ">=16.17.0"
+    }
+  }

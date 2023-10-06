@@ -1,0 +1,360 @@
+{
+    "$id": "https://raw.githubusercontent.com/micro-lc/back-kit/main/packages/templates/blank.json#",
+    "$schema": "https://raw.githubusercontent.com/micro-lc/back-kit/main/packages/engine/schemas/template.schema.json#",
+    "meta": {
+      "label": {
+        "en": "Scoring - Detail",
+        "it": "Scoring - Dettaglio"
+      },
+      "description": {
+        "en": "View scoring process details",
+        "it": "Dettaglio del processo di scoring"
+      }
+    },
+    "template": {
+      "definitions": {
+        "dataSchema": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "__STATE__": {
+              "type": "string",
+              "label": "State",
+              "enum": [
+                "PUBLIC",
+                "DRAFT",
+                "TRASH",
+                "DELETED"
+              ],
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "createdAt": {
+              "type": "string",
+              "label": "Date",
+              "format": "date-time",
+              "dateOptions": {
+                "displayFormat": "YYYY-MM-DD HH:mm:ss"
+              }
+            },
+            "sagaId": {
+              "type": "string",
+              "label": "Id"
+            },
+            "status": {
+              "type": "string",
+              "label": "Status"
+            },
+            "type": {
+              "type": "string",
+              "label": "Type"
+            },
+            "externalId": {
+              "type": "string",
+              "label": "External Id"
+            },
+            "approved": {
+              "type": "string",
+              "label": "Approved"
+            },
+            "result": {
+              "type": "string",
+              "label": "Result"
+            },
+            "input": {
+              "type": "object",
+              "label": "Input"
+            },
+            "scores": {
+              "type": "array",
+              "label": "Scores",
+              "dataSchema": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "string",
+                    "label": "Date",
+                    "format": "date-time",
+                    "dateOptions": {
+                      "displayFormat": "YYYY-MM-DD HH:mm:ss"
+                    }
+                  },
+                  "key": {
+                    "type": "string",
+                    "label": "Key"
+                  },
+                  "value": {
+                    "type": "string",
+                    "label": "Value"
+                  },
+                  "source": {
+                    "type": "string",
+                    "label": "Source"
+                  },
+                  "metadata": {
+                    "type": "Object",
+                    "label": "Metadata"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "label": "scoreId",
+                    "visualizationOptions": {
+                      "hidden": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "cardSchema": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "__STATE__": {
+              "type": "string",
+              "label": "State",
+              "enum": [
+                "PUBLIC",
+                "DRAFT",
+                "TRASH",
+                "DELETED"
+              ],
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "createdAt": {
+              "type": "string",
+              "label": "Date",
+              "format": "date-time",
+              "dateOptions": {
+                "displayFormat": "YYYY-MM-DD HH:mm:ss"
+              }
+            },
+            "sagaId": {
+              "type": "string",
+              "label": "Id"
+            },
+            "status": {
+              "type": "string",
+              "label": "Status"
+            },
+            "type": {
+              "type": "string",
+              "label": "Type"
+            },
+            "externalId": {
+              "type": "string",
+              "label": "External Id"
+            }
+          }
+        },
+        "scores": {
+          "type": "object",
+          "properties": {
+            "timestamp": {
+              "type": "string",
+              "label": "Date",
+              "format": "date-time",
+              "dateOptions": {
+                "displayFormat": "YYYY-MM-DD HH:mm:ss"
+              }
+            },
+            "key": {
+              "type": "string",
+              "label": "Key"
+            },
+            "value": {
+              "type": "string",
+              "label": "Value"
+            },
+            "source": {
+              "type": "string",
+              "label": "Source"
+            },
+            "_id": {
+              "type": "string",
+              "label": "scoreId",
+              "visualizationOptions": {
+                "hidden": true
+              }
+            }
+          }
+        },
+        "evaluation": {
+          "type": "object",
+          "properties": {
+            "approved": {
+              "type": "string",
+              "label": "Approved"
+            },
+            "result": {
+              "type": "string",
+              "label": "Result"
+            }
+          }
+        }
+      },
+      "content": {
+        "content": [
+          {
+            "content": [
+              {
+                "properties": {
+                  "content": "",
+                  "type": "link",
+                  "iconId": "LeftOutlined",
+                  "action": {
+                    "type": "go-back",
+                    "config": {}
+                  }
+                },
+                "tag": "bk-button"
+              },
+              {
+                "properties": {
+                  "content": "Process Details"
+                },
+                "tag": "bk-title"
+              },
+              {
+                "tag": "bk-refresh-button"
+              }
+            ],
+            "tag": "header",
+            "attributes": {
+              "style": "display: flex; flex-direction: row; align-items: center; gap: 10px; padding: 10px 20px; background-color: white;"
+            }
+          },
+          {
+            "content": [
+              {
+                "properties": {
+                  "cardSchema": {
+                    "header": {
+                      "icon": "InfoCircleOutlined",
+                      "title": "Process"
+                    },
+                    "main": {
+                      "dataSchema": {
+                        "$ref": "#/definitions/cardSchema"
+                      }
+                    }
+                  },
+                  "role": "default",
+                  "customMessageOnAbsentDatum": "-"
+                },
+                "tag": "bk-card",
+                "attributes": {
+                  "style": "margin: 0 0 0 1vw;"
+                }
+              },
+              {
+                "properties": {
+                  "cardSchema": {
+                    "header": {
+                      "icon": "InfoCircleOutlined",
+                      "title": "Evaluation"
+                    },
+                    "main": {
+                      "dataSchema": {
+                        "$ref": "#/definitions/evaluation"
+                      }
+                    }
+                  },
+                  "role": "default",
+                  "customMessageOnAbsentDatum": "-"
+                },
+                "tag": "bk-card",
+                "attributes": {
+                  "style": "margin: 0 0 0 1vw;"
+                }
+              },
+              {
+                "tag": "bk-table",
+                "attributes": {
+                  "style": "margin: 0 0 0 1vw;"
+                },
+                "properties": {
+                  "displayedDataPath": "data.[0].scores",
+                  "disableRowSelection": true,
+                  "maxLines": 10,
+                  "rowActions": {
+                    "kind": "icons",
+                    "actions": []
+                  },
+                  "disableRowClick": true,
+                  "initialSortDirection": "descend",
+                  "initialSortProperty": "scores.timestamp",
+                  "dataSchema": {
+                    "$ref": "#/definitions/scores"
+                  }
+                }
+              }
+            ],
+            "tag": "main",
+            "attributes": {
+              "style": "flex-grow: 1; background-color: #f0f2f5; padding: 20px; overflow-y: auto;"
+            }
+          },
+          {
+            "tag": "bk-url-parameters",
+            "properties": {
+              "urlMask": "/change-me/:_id"
+            }
+          },
+          {
+            "properties": {
+              "basePath": "/change-me",
+              "dataSchema": {
+                "$ref": "#/definitions/dataSchema"
+              }
+            },
+            "tag": "bk-crud-client"
+          },
+          {
+            "properties": {
+              "basePath": "/files-service",
+              "queryParams": {
+                "download": 1,
+                "downloadWithOriginalName": 0,
+                "useOriginalName": 0
+              }
+            },
+            "tag": "bk-file-client"
+          }
+        ],
+        "tag": "div",
+        "attributes": {
+          "style": "width: 100%; height: 100%; display: flex; flex-direction: column; position: relative;"
+        }
+      },
+      "sources": [
+        "https://cdn.jsdelivr.net/npm/@micro-lc/bk-web-components@{{BACK_KIT_VERSION}}/dist/bk-web-components.esm.js"
+      ]
+    } 
+  }

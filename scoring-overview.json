@@ -1,0 +1,382 @@
+{
+    "$id": "https://raw.githubusercontent.com/micro-lc/back-kit/main/packages/templates/blank.json#",
+    "$schema": "https://raw.githubusercontent.com/micro-lc/back-kit/main/packages/engine/schemas/template.schema.json#",
+    "meta": {
+      "label": {
+        "en": "Scoring - Overview",
+        "it": "Scoring - Overview"
+      },
+      "description": {
+        "en": "Monitors all scoring processes created",
+        "it": "Monitora tutti i processi di scoring creati"
+      }
+    },
+    "template": {
+      "definitions": {
+        "dataSchema": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "label": "Id",
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "__STATE__": {
+              "type": "string",
+              "label": "State",
+              "enum": [
+                "PUBLIC",
+                "DRAFT",
+                "TRASH",
+                "DELETED"
+              ],
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "createdAt": {
+              "type": "string",
+              "label": "Date",
+              "format": "date-time",
+              "dateOptions": {
+                "displayFormat": "YYYY-MM-DD"
+              }
+            },
+            "sagaId": {
+              "type": "string",
+              "label": "Id"
+            },
+            "status": {
+              "type": "string",
+              "label": "Status"
+            },
+            "type": {
+              "type": "string",
+              "label": "Type"
+            }
+          }
+        },
+        "exportData": {
+          "type": "object",
+          "properties": {
+            "createdAt": {
+              "type": "string",
+              "label": "Date",
+              "format": "date-time",
+              "dateOptions": {
+                "displayFormat": "YYYY-MM-DD"
+              }
+            },
+            "sagaId": {
+              "type": "string",
+              "label": "Id"
+            },
+            "status": {
+              "type": "string",
+              "label": "Status"
+            },
+            "type": {
+              "type": "string",
+              "label": "Type"
+            }
+          }
+        }
+      },
+      "content": {
+        "content": [
+          {
+            "content": [
+              {
+                "tag": "div",
+                "content": [
+                  {
+                    "properties": {
+                      "content": "Overview"
+                    },
+                    "tag": "bk-title"
+                  },
+                  {
+                    "tag": "bk-refresh-button",
+                    "attributes": {
+                      "style": "margin-left: 14px;"
+                    }
+                  },
+                  {
+                    "tag": "div",
+                    "attributes": {
+                      "style": "flex-grow: 1;"
+                    }
+                  },
+                  {
+                    "properties": {
+                      "placeholder": "Search..."
+                    },
+                    "tag": "bk-search-bar"
+                  },
+                  {
+                    "properties": {
+                      "iconId": "DownloadOutlined",
+                      "content": "Export",
+                      "clickConfig": {
+                        "type": "event",
+                        "actionConfig": {
+                          "label": "export-data",
+                          "payload": {}
+                        }
+                      }
+                    },
+                    "tag": "bk-button"
+                  },
+                  {
+                    "properties": {
+                      "content": "",
+                      "clickConfig": {
+                        "type": "event",
+                        "actionConfig": {
+                          "label": "filter",
+                          "payload": {}
+                        }
+                      },
+                      "type": "outlined",
+                      "iconId": "FunnelPlotOutlined"
+                    },
+                    "tag": "bk-button"
+                  }
+                ],
+                "attributes": {
+                  "style": "display: flex; flex-direction: row; gap: 10px; padding: 0 20px;"
+                }
+              },
+              {
+                "tag": "div",
+                "attributes": {
+                  "style": "width: 100%; display: flex; justify-content: space-between;"
+                },
+                "content": [
+                  {
+                    "attributes": {
+                      "style": "flex-grow: 1;"
+                    },
+                    "properties": {
+                      "tabs": [
+                        {
+                          "key": "all",
+                          "title": "All"
+                        },
+                        {
+                          "key": "created",
+                          "title": "Created",
+                          "filters": [
+                            {
+                              "property": "status",
+                              "operator": "equal",
+                              "value": "Created"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "pending",
+                          "title": "Pending",
+                          "filters": [
+                            {
+                              "property": "status",
+                              "operator": "equal",
+                              "value": "Pending"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "id-completed",
+                          "title": "Waiting for Approve",
+                          "filters": [
+                            {
+                              "property": "status",
+                              "operator": "equal",
+                              "value": "Waiting for Approve"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "completed",
+                          "title": "Completed",
+                          "filters": [
+                            {
+                              "property": "status",
+                              "operator": "equal",
+                              "value": "Completed"
+                            }
+                          ]
+                        },
+                        {
+                          "key": "failed",
+                          "title": "Failed",
+                          "filters": [
+                            {
+                              "property": "status",
+                              "operator": "equal",
+                              "value": "Failed"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "tag": "bk-tabs"
+                  },
+                  {
+                    "attributes": {
+                      "style": "margin-right: 4px"
+                    },
+                    "properties": {
+                      "dataSchema": {
+                        "$ref": "#/definitions/dataSchema"
+                      },
+                      "filters": []
+                    },
+                    "tag": "bk-filters-manager"
+                  }
+                ]
+              }
+            ],
+            "tag": "header",
+            "attributes": {
+              "style": "display: flex; flex-direction: column; padding-top: 10px; background-color: white;"
+            }
+          },
+          {
+            "content": [
+              {
+                "properties": {
+                  "dataSchema": {
+                    "$ref": "#/definitions/dataSchema"
+                  },
+                  "maxLines": 10,
+                  "rowActions": {
+                    "kind": "icons",
+                    "actions": []
+                  },
+                  "customActions": [
+                    {
+                      "tag": "bk-button",
+                      "properties": {
+                        "content": "",
+                        "title": "Go to Details",
+                        "iconId": "fas fa-arrow-right",
+                        "iconPlacement": "right",
+                        "action": {
+                          "type": "push",
+                          "config": {
+                            "url": "./details/{{args.[1]._id}}"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "tag": "bk-table"
+              },
+              {
+                "properties": {
+                  "requireConfirm": {
+                    "onClose": true,
+                    "onSave": true
+                  },
+                  "dataSchema": {
+                    "$ref": "#/definitions/dataSchema"
+                  },
+                  "width": "70vw"
+                },
+                "tag": "bk-form-modal"
+              },
+              {
+                "tag": "bk-confirmation-modal"
+              }
+            ],
+            "tag": "main",
+            "attributes": {
+              "style": "flex-grow: 1; background-color: #f0f2f5; padding: 20px; overflow-y: auto;"
+            }
+          },
+          {
+            "content": [
+              {
+                "properties": {
+                  "dataSchema": {
+                    "$ref": "#/definitions/dataSchema"
+                  },
+                  "width": "40vw"
+                },
+                "tag": "bk-filter-drawer"
+              }
+            ],
+            "tag": "aside"
+          },
+          {
+            "content": [
+              {
+                "tag": "bk-footer",
+                "attributes": {
+                  "style": "display: flex; justify-content: end; align-items: center;"
+                }
+              },
+              {
+                "tag": "bk-pagination",
+                "properties": {
+                  "pageSize": 10
+                }
+              }
+            ],
+            "tag": "footer",
+            "attributes": {
+              "style": "display: flex; flex-direction: row; flex-wrap: wrap; padding: 10px 20px; background-color: white; gap: 10px; position: sticky; bottom: 0; z-index: 10"
+            }
+          },
+          {
+            "properties": {
+              "basePath": "/change-me",
+              "dataSchema": {
+                "$ref": "#/definitions/dataSchema"
+              }
+            },
+            "tag": "bk-crud-client"
+          },
+          {
+            "properties": {
+              "basePath": "/v2/file"
+            },
+            "tag": "bk-file-client"
+          },
+          {
+            "tag": "bk-file-manager"
+          },
+          {
+            "tag": "bk-export-modal"
+          },
+          {
+            "tag": "bk-export-client",
+            "properties": {
+              "basePath": "/export",
+              "exportInternalUrl": "http://crud-service/change-me/export",
+              "dataSchema": {
+                "$ref": "#/definitions/exportData"
+              }
+            }
+          }
+        ],
+        "tag": "div",
+        "attributes": {
+          "style": "width: 100%; height: 100%; display: flex; flex-direction: column; position: relative;"
+        }
+      },
+      "sources": [
+        "https://cdn.jsdelivr.net/npm/@micro-lc/bk-web-components@latest/dist/bk-web-components.esm.js"
+      ]
+    }
+  }

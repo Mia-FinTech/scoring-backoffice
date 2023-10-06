@@ -1,0 +1,453 @@
+{
+    "$id": "https://raw.githubusercontent.com/micro-lc/back-kit/main/packages/templates/blank.json#",
+    "$schema": "https://raw.githubusercontent.com/micro-lc/back-kit/main/packages/engine/schemas/template.schema.json#",
+    "meta": {
+      "label": {
+        "en": "Adaptive Approval - Overview",
+        "it": "Adaptive Approval - Overview"
+      },
+      "description": {
+        "en": "Monitors all rules created",
+        "it": "Monitora tutte le regole create"
+      }
+    },
+    "template": {
+      "definitions": {
+        "dataSchema": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "label": "ID",
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "formOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "__STATE__": {
+              "type": "string",
+              "label": "State",
+              "enum": [
+                "PUBLIC",
+                "DRAFT",
+                "TRASH",
+                "DELETED"
+              ],
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "formOptions": {
+                "hidden": true
+              },
+              "filtersOptions": {
+                "hidden": true
+              }
+            },
+            "ruleId": {
+              "type": "string",
+              "label": "Id"
+            },
+            "priority": {
+              "type": "string",
+              "label": "Priority"
+            },
+            "type": {
+              "type": "string",
+              "label": "Type"
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  },
+                  "operator": {
+                    "type": "string",
+                    "enum": [
+                      "equal",
+                      "not_equal",
+                      "in",
+                      "not_in",
+                      "greater_than",
+                      "greater_or_equal_than",
+                      "less_than",
+                      "less_or_equal_than"
+                    ]
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "visualizationOptions": {
+                "hidden": true
+              }
+            },
+            "response": {
+              "type": "object",
+              "visualizationOptions": {
+                "hidden": true
+              },
+              "description": {
+                "en": "Must be a JSON object",
+                "it": "Deve essere un oggetto JSON"
+              }
+            }
+          }
+        }
+      },
+      "content": {
+        "content": [
+          {
+            "content": [
+              {
+                "tag": "div",
+                "content": [
+                  {
+                    "properties": {
+                      "content": "Approval"
+                    },
+                    "tag": "bk-title"
+                  },
+                  {
+                    "tag": "bk-refresh-button",
+                    "attributes": {
+                      "style": "margin-left: 14px; align-self: end;"
+                    }
+                  },
+                  {
+                    "tag": "div",
+                    "attributes": {
+                      "style": "flex-grow: 1;"
+                    }
+                  },
+                  {
+                    "properties": {
+                      "placeholder": "Search..."
+                    },
+                    "tag": "bk-search-bar"
+                  },
+                  {
+                    "tag": "bk-button",
+                    "attributes": {
+                      "style": "margin: 0 1vw 0 0;"
+                    },
+                    "properties": {
+                      "content": {
+                        "en": "New Rule",
+                        "it": "Regola"
+                      },
+                      "iconId": "fas fa-plus",
+                      "action": {
+                        "type": "event",
+                        "config": {
+                          "events": {
+                            "label": "add-new",
+                            "payload": {}
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "content": "",
+                      "clickConfig": {
+                        "type": "event",
+                        "actionConfig": {
+                          "label": "filter",
+                          "payload": {}
+                        }
+                      },
+                      "type": "outlined",
+                      "iconId": "FunnelPlotOutlined"
+                    },
+                    "tag": "bk-button"
+                  }
+                ],
+                "attributes": {
+                  "style": "display: flex; flex-direction: row; gap: 10px; margin: 0 0 10px 0; padding: 0 20px;"
+                }
+              },
+              {
+                "tag": "div",
+                "attributes": {
+                  "style": "width: 100%; display: flex; justify-content: space-between;"
+                },
+                "content": [
+                  {
+                    "attributes": {
+                      "style": "margin-right: 4px"
+                    },
+                    "properties": {
+                      "dataSchema": {
+                        "$ref": "#/definitions/dataSchema"
+                      },
+                      "filters": []
+                    },
+                    "tag": "bk-filters-manager"
+                  }
+                ]
+              }
+            ],
+            "tag": "header",
+            "attributes": {
+              "style": "display: flex; flex-direction: column; padding-top: 10px; background-color: white;"
+            }
+          },
+          {
+            "content": [
+              {
+                "properties": {
+                  "dataSchema": {
+                    "$ref": "#/definitions/dataSchema"
+                  },
+                  "maxLines": 10,
+                  "customActions": [
+                    {
+                      "tag": "bk-button",
+                      "properties": {
+                        "iconId": "DeleteOutlined",
+                        "content": "",
+                        "type": "ghost",
+                        "action": {
+                          "type": "event",
+                          "config": {
+                            "events": {
+                              "label": "require-confirm",
+                              "payload": {
+                                "content": {
+                                  "en": "Do you want to confirm this action?",
+                                  "it": "Vuoi confermare questa azione?"
+                                },
+                                "configOk": {
+                                  "properties": {
+                                    "action": {
+                                      "type": "event",
+                                      "config": {
+                                        "events": {
+                                          "label": "delete-data",
+                                          "payload": "{{rawObject args.[1]}}"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "tag": "bk-button",
+                      "properties": {
+                        "content": "",
+                        "iconId": "fas fa-arrow-right",
+                        "iconPlacement": "right",
+                        "clickConfig": {
+                          "type": "push",
+                          "actionConfig": {
+                            "url": "./change-me/{{args.[1]._id}}"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "tag": "bk-table"
+              },
+              {
+                "properties": {
+                  "requireConfirm": {
+                    "onClose": false,
+                    "onSave": true
+                  },
+                  "dataSchema": {
+                    "$ref": "#/definitions/dataSchema"
+                  },
+                  "width": "70vw",
+                  "afterFinishEvents": {
+                    "label": "change-query",
+                    "payload": {}
+                  },
+                  "wizard": [
+                    {
+                      "keys": [
+                        "priority",
+                        "ruleId",
+                        "type"
+                      ],
+                      "labels": {
+                        "stepperTitle": {
+                          "en": "Overview",
+                          "it": "Dettaglio Regola"
+                        }
+                      }
+                    },
+                    {
+                      "keys": [
+                        "rules"
+                      ],
+                      "labels": {
+                        "wizardAddNew": {
+                          "en": "Add rule",
+                          "it": "Aggiungi regola"
+                        },
+                        "stepperTitle": {
+                          "en": "Conditions",
+                          "it": "Condizioni"
+                        },
+                        "accordionHeader": {
+                          "en": "Conditions",
+                          "it": "Condizioni"
+                        },
+                        "accordionEmptyComponent": {
+                          "en": "No rules",
+                          "it": "Nessuna regola definita"
+                        }
+                      }
+                    },
+                    {
+                      "keys": [
+                        "response"
+                      ],
+                      "labels": {
+                        "stepperTitle": {
+                          "en": "Response",
+                          "it": "Risposta"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "tag": "bk-form-wizard"
+              },
+              {
+                "tag": "bk-confirmation-modal"
+              },
+              {
+                "properties": {
+                  "rootElementSelectors": "main.micro-lc-layout-content",
+                  "successEventMap": {
+                    "create-data": {
+                      "title": "Success",
+                      "content": "Data successfully created",
+                      "type": "success"
+                    },
+                    "update-data": {
+                      "title": "Success",
+                      "content": "Data successfully updated",
+                      "type": "success"
+                    },
+                    "delete-data": {
+                      "title": "Success",
+                      "content": "Data successfully deleted",
+                      "type": "success"
+                    }
+                  },
+                  "errorEventMap": {
+                    "create-data": {
+                      "title": "Error",
+                      "content": "An error occurred during order creation",
+                      "type": "error"
+                    },
+                    "update-data": {
+                      "title": "Error",
+                      "content": "An error occurred during order updated",
+                      "type": "error"
+                    },
+                    "delete-data": {
+                      "title": "Error",
+                      "content": "An error occurred during order deletion",
+                      "type": "error"
+                    }
+                  }
+                },
+                "tag": "bk-notifications",
+                "attributes": {}
+              }
+            ],
+            "tag": "main",
+            "attributes": {
+              "style": "flex-grow: 1; background-color: #f0f2f5; padding: 20px; overflow-y: auto;"
+            }
+          },
+          {
+            "content": [
+              {
+                "properties": {
+                  "dataSchema": {
+                    "$ref": "#/definitions/dataSchema"
+                  },
+                  "width": "40vw"
+                },
+                "tag": "bk-filter-drawer"
+              }
+            ],
+            "tag": "aside"
+          },
+          {
+            "content": [
+              {
+                "tag": "bk-bulk-delete"
+              },
+              {
+                "tag": "bk-bulk-actions",
+                "properties": {
+                  "dataSchema": {
+                    "$ref": "#/definitions/dataSchema"
+                  }
+                }
+              },
+              {
+                "tag": "div",
+                "attributes": {
+                  "style": "flex-grow: 1;"
+                }
+              },
+              {
+                "tag": "bk-footer",
+                "attributes": {
+                  "style": "display: flex; justify-content: end; align-items: center;"
+                }
+              },
+              {
+                "tag": "bk-pagination",
+                "properties": {
+                  "pageSize": 10
+                }
+              }
+            ],
+            "tag": "footer",
+            "attributes": {
+              "style": "display: flex; flex-direction: row; flex-wrap: wrap; padding: 10px 20px; background-color: white; gap: 10px; position: sticky; bottom: 0; z-index: 10"
+            }
+          },
+          {
+            "properties": {
+              "basePath": "/change-me",
+              "dataSchema": {
+                "$ref": "#/definitions/dataSchema"
+              }
+            },
+            "tag": "bk-crud-client"
+          }
+        ],
+        "tag": "div",
+        "attributes": {
+          "style": "width: 100%; height: 100%; display: flex; flex-direction: column; position: relative;"
+        }
+      },
+      "sources": [
+        "https://cdn.mia-platform.eu/backoffice/bk-web-components/{{BACK_KIT_VERSION}}/dist/bk-web-components.esm.js"
+      ]
+    }
+  }
